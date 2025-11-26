@@ -1,10 +1,14 @@
-# vp-template
+# trustee
 
 ![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square)
 
-A Helm chart to serve as the Validated Patterns Template
+A helm chart to deploy trustee into the [coco-pattern](https://github.com/validatedpatterns/coco-pattern) and other charts.
 
-This chart is used to serve as the template for Validated Patterns Charts
+What is needed in addition to the chart to make this work?
+1. The [gen-certificate](https://github.com/validatedpatterns/coco-pattern/blob/main/ansible/gen-certificate.yaml) ansible job.
+2. A subscription to Red Hat Build of Trustee
+3. Creating (at least) a container security policy [as describe here](https://docs.redhat.com/en/documentation/openshift_sandboxed_containers/1.10/html/deploying_red_hat_build_of_trustee/deploying-trustee_azure-trustee#creating-image-verification-policy_azure-trustee)
+
 
 ### Notable changes
 
