@@ -4,7 +4,7 @@ plugins:
   - "@semantic-release/commit-analyzer"
   - "@semantic-release/release-notes-generator"
   - - "@semantic-release/exec"
-    - prepareCmd: sed -i.bak 's/^version:.*/version:${nextRelease.version}/' Chart.yaml && rm -f Chart.yaml.bak
+    - prepareCmd: "sed -i.bak 's/^version:.*/version: ${nextRelease.version}/' Chart.yaml && rm -f Chart.yaml.bak"
   - "@semantic-release/github"
   - - "@semantic-release/git"
     - assets:
