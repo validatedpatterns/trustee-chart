@@ -4,6 +4,12 @@ secretStore:
   name: ""
   kind: ""
 
+
+global:
+  secretStore:
+    # Secret store backend, typically overridden by values-global.yaml
+    backend: ""
+
 # KBS (Key Broker Service) configuration
 kbs:
   # Security policy is an expected secret and is required to be pushed into the KBS
