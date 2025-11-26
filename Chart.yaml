@@ -1,6 +1,9 @@
 apiVersion: v2
-description: A Helm chart to serve as the Validated Patterns Template
+description: A Helm chart to provide an opinionated deployment of Trustee in a validated pattern
 keywords:
 - pattern
-name: vp-template
+- trustee
+- confidential-computing
+- confidential-containers
+name: trustee
 version: 0.0.1
