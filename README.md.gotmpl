@@ -5,7 +5,14 @@
 
 {{ template "chart.description" . }}
 
-This chart is used to serve as the template for Validated Patterns Charts
+This chart is intended for use with the [coco-pattern](https://github.com/validatedpatterns/coco-pattern) and other validated patterns.
+
+In order to use this chart, you will need to:
+1. Have a security policy created and available. This is a container security policy that will be used to verify the inside a kata vm.
+    1. See here for more information: https://docs.redhat.com/en/documentation/openshift_sandboxed_containers/1.10/html/deploying_red_hat_build_of_trustee/deploying-trustee_azure-trustee#creating-image-verification-policy_azure-trustee
+2. Have a public key created and available. This is a public key that will be used to authenticate the KBS management API.
+3. Have a list of secret resources to be added to the KBS as a list of name, key pairs where key is the path to the secret in the secret store. These will be used to authenticate the KBS management API.
+
 
 ### Notable changes
 
