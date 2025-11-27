@@ -1,10 +1,22 @@
 # trustee
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square)
 
 A Helm chart to provide an opinionated deployment of Trustee in a validated pattern
 
-This chart is used to serve as the template for Validated Patterns Charts
+This chart is intended for use with the [coco-pattern](https://github.com/validatedpatterns/coco-pattern) and other validated patterns.
+
+It is part of three charts that are intended to be used together:
+1. [trustee](https://github.com/validatedpatterns/trustee-chart) indended to deploy the Key Broker Service (KBS) and related infrastructure (this chart))
+    1. This should be deployed on an ACM hub cluster
+2. [sandboxed-containers](https://github.com/validatedpatterns/sandboxed-containers-chart) intended to be deployed on an ACM spoke cluster where there is access to confidential hardware
+3. [sandboxed-policies](https://github.com/validatedpatterns/sandboxed-policies-chart)  intended to be deployed on an ACM hub cluster which pushes polices to the spoke cluster.
+
+In order to use this chart, you will need to:
+1. Have a security policy created and available. This is a container security policy that will be used to verify the inside a kata vm.
+    1. See here for more information: https://docs.redhat.com/en/documentation/openshift_sandboxed_containers/1.10/html/deploying_red_hat_build_of_trustee/deploying-trustee_azure-trustee#creating-image-verification-policy_azure-trustee
+2. Have a public key created and available. This is a public key that will be used to authenticate the KBS management API.
+3. Have a list of secret resources to be added to the KBS as a list of name, key pairs where key is the path to the secret in the secret store. These will be used to authenticate the KBS management API.
 
 ### Notable changes
 
