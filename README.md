@@ -6,6 +6,12 @@ A Helm chart to provide an opinionated deployment of Trustee in a validated patt
 
 This chart is intended for use with the [coco-pattern](https://github.com/validatedpatterns/coco-pattern) and other validated patterns.
 
+It is part of three charts that are intended to be used together:
+1. [trustee](https://github.com/validatedpatterns/trustee-chart) indended to deploy the Key Broker Service (KBS) and related infrastructure (this chart))
+    1. This should be deployed on an ACM hub cluster
+2. [sandboxed-containers](https://github.com/validatedpatterns/sandboxed-containers-chart) intended to be deployed on an ACM spoke cluster where there is access to confidential hardware
+3. [sandboxed-policies](https://github.com/validatedpatterns/sandboxed-policies-chart)  intended to be deployed on an ACM hub cluster which pushes polices to the spoke cluster.
+
 In order to use this chart, you will need to:
 1. Have a security policy created and available. This is a container security policy that will be used to verify the inside a kata vm.
     1. See here for more information: https://docs.redhat.com/en/documentation/openshift_sandboxed_containers/1.10/html/deploying_red_hat_build_of_trustee/deploying-trustee_azure-trustee#creating-image-verification-policy_azure-trustee
