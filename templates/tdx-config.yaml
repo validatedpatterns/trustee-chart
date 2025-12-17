@@ -1,0 +1,12 @@
+{{- if .Values.kbs.tdx.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tdx-config
+  namespace: trustee-operator-system
+data:
+  sgx_default_qcnl.conf: |
+    {
+      "collateral_service": "{{ .Values.kbs.tdx.collateralService }}"
+    }
+{{- end }}
