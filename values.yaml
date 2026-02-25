@@ -36,6 +36,13 @@ kbs:
       key: "secret/data/hub/kbsres1"
     - name: "passphrase"
       key: "secret/data/hub/passphrase"
+  # Pre-existing secrets to add to kbsSecretResources without creating
+  # ExternalSecrets. Use this for secrets that are created outside the
+  # Vault/ESO flow (e.g. by imperative jobs, cert-manager, or other
+  # controllers). Only the secret name is needed; the secret must already
+  # exist in the trustee-operator-system namespace.
+  extraSecrets: []
+
   # Intel TDX (Trust Domain Extensions) configuration
   tdx:
     # Enable TDX attestation support

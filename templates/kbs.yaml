@@ -14,6 +14,9 @@ spec:
     {{- range .Values.kbs.secretResources }}
     - "{{ .name }}"
     {{- end }}
+    {{- range .Values.kbs.extraSecrets }}
+    - "{{ . }}"
+    {{- end }}
     {{- if eq .Values.global.coco.securityPolicyFlavour "signed" }}
     - "cosign-keys"
     {{- end }}
