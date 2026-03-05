@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: kbs-config
   namespace: trustee-operator-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
 data:
   kbs-config.toml: |
     [http_server]
@@ -11,31 +13,36 @@ data:
     private_key = "/etc/https-key/tls.key"
     certificate = "/etc/https-cert/tls.crt"
     [admin]
-    insecure_api = true
+    insecure_api = false
     auth_public_key = "/etc/auth-secret/publicKey"
 
     [attestation_token]
-    insecure_key = true
+    insecure_key = false
     attestation_token_type = "CoCo"
+    trusted_certs_paths = ["/etc/attestation-cert/tls.crt"] # Check for location in cert (based on key generated)
 
     [attestation_service]
     type = "coco_as_builtin"
     work_dir = "/opt/confidential-containers/attestation-service"
     policy_engine = "opa"
 
-      [attestation_service.attestation_token_broker]
-      type = "Ear"
-      policy_dir = "/opt/confidential-containers/attestation-service/policies"
+    [attestation_service.attestation_token_broker]
+    type = "Ear"
+    policy_dir = "/opt/confidential-containers/attestation-service/policies"
 
-      [attestation_service.attestation_token_config]
-      duration_min = 5
+    [attestation_service.attestation_token_broker.signer]
+    key_path = "/etc/attestation-cert/tls.key"
+    cert_path = "/etc/attestation-cert/tls.crt"
 
-      [attestation_service.rvps_config]
-      type = "BuiltIn"
+    [attestation_service.attestation_token_config]
+    duration_min = 5
 
-        [attestation_service.rvps_config.storage]
-        type = "LocalJson"
-        file_path = "/opt/confidential-containers/rvps/reference-values/reference-values.json"
+    [attestation_service.rvps_config]
+    type = "BuiltIn"
+
+    [attestation_service.rvps_config.storage]
+    type = "LocalJson"
+    file_path = "/opt/confidential-containers/rvps/reference-values/reference-values.json"
 
     [[plugins]]
     name = "resource"

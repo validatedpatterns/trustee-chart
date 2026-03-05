@@ -3,6 +3,8 @@ kind: KbsConfig
 metadata:
   name: kbsconfig
   namespace: trustee-operator-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "7"
 spec:
   kbsConfigMapName: kbs-config
   kbsAuthSecretName: kbs-auth-public-key
@@ -12,10 +14,18 @@ spec:
     {{- range .Values.kbs.secretResources }}
     - "{{ .name }}"
     {{- end }}
+    {{- if eq .Values.global.coco.securityPolicyFlavour "signed" }}
+    - "cosign-keys"
+    {{- end }}
     - "security-policy"
+    - "attestation-status"
   kbsHttpsKeySecretName: kbs-https-key
   kbsHttpsCertSecretName: kbs-https-certificate
   kbsResourcePolicyConfigMapName: resource-policy
+  kbsAttestationPolicyConfigMapName: attestation-policy
+  kbsAttestationCertSecretName: attestation-cert
+  kbsAttestationKeySecretName: attestation-cert
+
 
   # TDX specific configuration (optional)
   {{- if .Values.kbs.tdx.enabled }}

@@ -5,7 +5,7 @@ kind: ExternalSecret
 metadata: 
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-  name: securitypolicy-eso
+  name: attestation-status-eso
   namespace: trustee-operator-system
 spec:
   refreshInterval: 15s
@@ -14,10 +14,10 @@ spec:
     kind: {{ .Values.secretStore.kind }}
   data:
   target:
-    name: security-policy
+    name: attestation-status
     template:
       type: generic
   dataFrom:
   - extract:
-      key: {{ .Values.global.coco.securityPolicy }}
+      key: {{ .Values.global.coco.attestationStatus }}
 {{- end }}

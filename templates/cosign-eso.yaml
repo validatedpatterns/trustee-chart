@@ -1,11 +1,11 @@
-{{- if ne .Values.global.secretStore.backend "none" }}
+{{- if and (ne .Values.global.secretStore.backend "none") (eq .Values.global.coco.securityPolicyFlavour "signed") }}
 ---
 apiVersion: "external-secrets.io/v1beta1"
 kind: ExternalSecret
 metadata: 
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-  name: securitypolicy-eso
+  name: cosigned-eso
   namespace: trustee-operator-system
 spec:
   refreshInterval: 15s
@@ -14,10 +14,10 @@ spec:
     kind: {{ .Values.secretStore.kind }}
   data:
   target:
-    name: security-policy
+    name: cosign-keys
     template:
       type: generic
   dataFrom:
   - extract:
-      key: {{ .Values.global.coco.securityPolicy }}
+      key: {{ .Values.global.coco.cosignKeys }}
 {{- end }}

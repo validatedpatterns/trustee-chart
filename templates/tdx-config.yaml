@@ -4,6 +4,8 @@ kind: ConfigMap
 metadata:
   name: tdx-config
   namespace: trustee-operator-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
 data:
   sgx_default_qcnl.conf: |
     {
