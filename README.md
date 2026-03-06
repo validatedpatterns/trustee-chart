@@ -1,6 +1,6 @@
 # trustee
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square)
+![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square)
 
 A Helm chart to provide an opinionated deployment of Trustee in a validated pattern
 
@@ -32,6 +32,7 @@ In order to use this chart, you will need to:
 | global.coco.securityPolicyFlavour | string | `"insecure"` |  |
 | global.secretStore.backend | string | `""` |  |
 | kbs.cosignKeys | string | `"secret/data/hub/coSignKeys"` |  |
+| kbs.extraSecrets | list | `[]` |  |
 | kbs.publicKey | string | `"secret/data/hub/kbsPublicKey"` |  |
 | kbs.secretResources[0].key | string | `"secret/data/hub/kbsres1"` |  |
 | kbs.secretResources[0].name | string | `"kbsres1"` |  |
