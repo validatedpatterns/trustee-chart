@@ -8,7 +8,11 @@ metadata:
 data:
   policy.rego: |
     package policy
-    default allow = false
-    allow {
+
+    import rego.v1
+
+    default allow := false
+
+    allow if {
       input["submods"]["cpu0"]["ear.status"] == "affirming"
     }

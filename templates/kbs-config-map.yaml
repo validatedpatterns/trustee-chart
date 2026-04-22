@@ -13,8 +13,17 @@ data:
     private_key = "/etc/https-key/tls.key"
     certificate = "/etc/https-cert/tls.crt"
     [admin]
+    {{- if eq (default "v1.0" .Values.kbs.admin.format) "v1.1" }}
+    type = "Simple"
+    insecure_api = false
+
+    [[admin.personas]]
+    id = "admin"
+    public_key_path = "/etc/auth-secret/publicKey"
+    {{- else }}
     insecure_api = false
     auth_public_key = "/etc/auth-secret/publicKey"
+    {{- end }}
 
     [attestation_token]
     insecure_key = false

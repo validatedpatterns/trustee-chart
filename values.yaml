@@ -20,6 +20,11 @@ global:
 
 # KBS (Key Broker Service) configuration
 kbs:
+  admin:
+    # Admin config format: "v1.0" for Trustee 1.0 (auth_public_key),
+    # "v1.1" for Trustee 1.1+ (type = "Simple" with [[admin.personas]])
+    format: "v1.0"
+
   # Security policy is an expected secret and is required to be pushed into the KBS
   # presumes security policy flavour is signed
   cosignKeys: secret/data/hub/coSignKeys
