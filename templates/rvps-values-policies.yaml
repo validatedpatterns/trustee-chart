@@ -21,7 +21,11 @@ spec:
         object-templates-raw: |
           {{`{{- $pcr8Hash := fromConfigMap "imperative" "initdata" "PCR8_HASH" -}}`}}
           {{`{{- $debugPcr8Hash := fromConfigMap "imperative" "debug-initdata" "PCR8_HASH" -}}`}}
-          {{`{{- $referenceValues := list (dict "name" "init_data" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr8Hash $debugPcr8Hash)) -}}`}}
+          {{`{{- $rawHash := fromConfigMap "imperative" "initdata" "RAW_HASH" -}}`}}
+          {{`{{- $debugRawHash := fromConfigMap "imperative" "debug-initdata" "RAW_HASH" -}}`}}
+          {{`{{- $rawHashPadded := printf "%s00000000000000000000000000000000" $rawHash -}}`}}
+          {{`{{- $debugRawHashPadded := printf "%s00000000000000000000000000000000" $debugRawHash -}}`}}
+          {{`{{- $referenceValues := list (dict "name" "init_data" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr8Hash $debugPcr8Hash $rawHashPadded $debugRawHashPadded)) -}}`}}
           {{`{{- $pcrStash := (lookup "v1" "Secret" "trustee-operator-system" "pcr-stash") -}}`}}
           {{`{{- if $pcrStash -}}`}}
           {{`{{- $secretData := $pcrStash.data.json | base64dec | fromJson -}}`}}
