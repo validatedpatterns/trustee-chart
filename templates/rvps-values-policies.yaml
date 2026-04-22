@@ -33,7 +33,16 @@ spec:
           {{`{{- $pcr09 := $secretData.measurements.sha256.pcr09 -}}`}}
           {{`{{- $pcr11 := $secretData.measurements.sha256.pcr11 -}}`}}
           {{`{{- $pcr12 := $secretData.measurements.sha256.pcr12 -}}`}}
-          {{`{{- $referenceValues = append $referenceValues (dict "name" "snp_pcr03" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr03)) (dict "name" "tdx_pcr03" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr03)) (dict "name" "snp_pcr08" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr8Hash $debugPcr8Hash)) (dict "name" "tdx_pcr08" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr8Hash $debugPcr8Hash)) (dict "name" "snp_pcr09" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr09)) (dict "name" "tdx_pcr09" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr09)) (dict "name" "snp_pcr11" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr11)) (dict "name" "tdx_pcr11" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr11)) (dict "name" "snp_pcr12" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr12)) (dict "name" "tdx_pcr12" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr12)) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "snp_pcr03" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr03)) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "tdx_pcr03" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr03)) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "snp_pcr08" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr8Hash $debugPcr8Hash)) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "tdx_pcr08" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr8Hash $debugPcr8Hash)) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "snp_pcr09" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr09)) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "tdx_pcr09" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr09)) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "snp_pcr11" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr11)) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "tdx_pcr11" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr11)) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "snp_pcr12" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr12)) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "tdx_pcr12" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr12)) -}}`}}
           {{`{{- end -}}`}}
           - complianceType: mustonlyhave
             objectDefinition:
