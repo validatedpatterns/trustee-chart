@@ -54,3 +54,19 @@ data:
     configuration := 2 if {
       input["az-tdx-vtpm"]
     }
+
+    ##### Baremetal TDX
+    executables := 3 if {
+      input["tdx"]
+      input.init_data in query_reference_value("init_data")
+    }
+    hardware := 2 if { input["tdx"] }
+    configuration := 2 if { input["tdx"] }
+
+    ##### Baremetal SNP
+    executables := 3 if {
+      input["snp"]
+      input.init_data in query_reference_value("init_data")
+    }
+    hardware := 2 if { input["snp"] }
+    configuration := 2 if { input["snp"] }
