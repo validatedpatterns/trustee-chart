@@ -52,6 +52,11 @@ data:
     [attestation_service.rvps_config.storage]
     type = "LocalJson"
     file_path = "/opt/confidential-containers/rvps/reference-values/reference-values.json"
+    {{- if .Values.kbs.gpu.enabled }}
+
+    [attestation_service.verifier_config.nvidia_verifier]
+    type = "Remote"
+    {{- end }}
 
     [[plugins]]
     name = "resource"

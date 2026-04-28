@@ -16,3 +16,10 @@ data:
     allow if {
       input["submods"]["cpu0"]["ear.status"] == "affirming"
     }
+    {{- if .Values.kbs.gpu.enabled }}
+
+    allow if {
+      input["submods"]["cpu0"]["ear.status"] == "affirming"
+      input["submods"]["gpu0"]["ear.status"] == "affirming"
+    }
+    {{- end }}

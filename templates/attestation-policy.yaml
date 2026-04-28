@@ -70,3 +70,61 @@ data:
     }
     hardware := 2 if { input["snp"] }
     configuration := 2 if { input["snp"] }
+    {{- if .Values.kbs.gpu.enabled }}
+
+    ##### GPU Attestation (NVIDIA H100/H200) — CPU-class evidence with GPU data
+    hardware := 2 if {
+      input["snp"]
+      input["gpu"]
+    }
+
+    executables := 3 if {
+      input["snp"]
+      input["gpu"]
+      input.init_data in query_reference_value("init_data")
+    }
+
+    configuration := 2 if {
+      input["snp"]
+      input["gpu"]
+    }
+    {{- end }}
+{{- if .Values.kbs.gpu.enabled }}
+  default_gpu.rego: |
+    package policy
+
+    import rego.v1
+
+    default hardware := 97
+    default executables := 33
+    default configuration := 36
+
+    trust_claims := {
+      "executables": executables,
+      "hardware": hardware,
+      "configuration": configuration,
+    }
+
+    hardware := 2 if {
+      input.nvidia
+      input.nvidia["x-nvidia-gpu-attestation-report-cert-chain"]["x-nvidia-cert-status"] == "valid"
+      input.nvidia["x-nvidia-gpu-attestation-report-parsed"]
+      input.nvidia["x-nvidia-gpu-attestation-report-signature-verified"]
+      input.nvidia["x-nvidia-gpu-arch-check"]
+    }
+
+    configuration := 2 if {
+      input.nvidia.secboot
+      input.nvidia.dbgstat == "disabled"
+    }
+
+    executables := 3 if {
+      input.nvidia["x-nvidia-gpu-driver-rim-fetched"]
+      input.nvidia["x-nvidia-gpu-driver-rim-schema-validated"]
+      input.nvidia["x-nvidia-gpu-driver-rim-signature-verified"]
+      input.nvidia["x-nvidia-gpu-vbios-rim-fetched"]
+      input.nvidia["x-nvidia-gpu-vbios-rim-schema-validated"]
+      input.nvidia["x-nvidia-gpu-vbios-rim-signature-verified"]
+      input.nvidia.measres == "success"
+    }
+{{- end }}
