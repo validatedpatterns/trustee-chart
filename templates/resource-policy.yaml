@@ -12,7 +12,15 @@ data:
     import rego.v1
 
     default allow := false
+    {{- if not .Values.kbs.gpu.enabled }}
 
     allow if {
       input["submods"]["cpu0"]["ear.status"] == "affirming"
     }
+    {{- else }}
+
+    allow if {
+      input["submods"]["cpu0"]["ear.status"] == "affirming"
+      input["submods"]["gpu0"]["ear.status"] == "affirming"
+    }
+    {{- end }}
