@@ -9,15 +9,14 @@ data:
   policy.rego: |
     package policy
     default allow = false
-    allow {
-      input["submods"]["cpu0"]["ear.status"] == "affirming"
+    allow if {
+      input.submods.cpu0["ear.status"] == "affirming"
       gpu0_ok
     }
+    gpu0_ok if {
+          not input.submods.gpu0
+        }
 
-    gpu0_ok {
-      not input["submods"]["gpu0"]
-    }
-
-    gpu0_ok {
-      input["submods"]["gpu0"]["ear.status"] == "affirming"
+    gpu0_ok if {
+      input.submods.gpu0["ear.status"] == "affirming"
     }
