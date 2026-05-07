@@ -8,15 +8,17 @@ metadata:
 data:
   policy.rego: |
     package policy
-    default allow = false
-    allow if {
-      input.submods.cpu0["ear.status"] == "affirming"
-      gpu0_ok
-    }
-    gpu0_ok if {
-          not input.submods.gpu0
-        }
+    import rego.v1
 
-    gpu0_ok if {
-      input.submods.gpu0["ear.status"] == "affirming"
+    default allow = false
+
+    allow if {
+        not any_not_affirming
+        count(input.submods) > 0
+
+    }
+
+    any_not_affirming if {
+        some _, submod in input.submods
+        submod["ear.status"] != "affirming"
     }
