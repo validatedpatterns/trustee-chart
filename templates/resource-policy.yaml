@@ -8,19 +8,16 @@ metadata:
 data:
   policy.rego: |
     package policy
-
-    import rego.v1
-
-    default allow := false
-    {{- if not .Values.kbs.gpu.enabled }}
-
-    allow if {
+    default allow = false
+    allow {
       input["submods"]["cpu0"]["ear.status"] == "affirming"
+      gpu0_ok
     }
-    {{- else }}
 
-    allow if {
-      input["submods"]["cpu0"]["ear.status"] == "affirming"
+    gpu0_ok {
+      not input["submods"]["gpu0"]
+    }
+
+    gpu0_ok {
       input["submods"]["gpu0"]["ear.status"] == "affirming"
     }
-    {{- end }}
