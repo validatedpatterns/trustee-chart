@@ -9,6 +9,9 @@ data:
   kbs-config.toml: |
     [http_server]
     sockets = ["0.0.0.0:8080"]
+    {{- if .Values.kbs.workerCount }}
+    worker_count = {{ .Values.kbs.workerCount }}
+    {{- end }}
     insecure_http = false
     private_key = "/etc/https-key/tls.key"
     certificate = "/etc/https-cert/tls.crt"
