@@ -9,6 +9,7 @@ metadata:
 data:
   sgx_default_qcnl.conf: |
     {
-      "collateral_service": "{{ .Values.kbs.tdx.collateralService }}"
+      "collateral_service": "{{ .Values.kbs.tdx.collateralService }}",
+      "use_secure_cert": false
     }
 {{- end }}

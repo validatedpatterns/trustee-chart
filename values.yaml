@@ -20,6 +20,11 @@ global:
 
 # KBS (Key Broker Service) configuration
 kbs:
+  admin:
+    # Admin config format: "v1.0" for Trustee 1.0 (auth_public_key),
+    # "v1.1" for Trustee 1.1+ (type = "Simple" with [[admin.personas]])
+    format: "v1.0"
+
   # Security policy is an expected secret and is required to be pushed into the KBS
   # presumes security policy flavour is signed
   cosignKeys: secret/data/hub/coSignKeys
@@ -42,6 +47,17 @@ kbs:
   # controllers). Only the secret name is needed; the secret must already
   # exist in the trustee-operator-system namespace.
   extraSecrets: []
+
+  # Number of HTTP worker threads for the KBS server.
+  # If unset, the KBS binary defaults to one worker per logical CPU core,
+  # which can cause "too many open files" crashes on high-core-count systems
+  # where the container's nofile ulimit is lower than the worker count.
+  # Set this to a reasonable value (e.g., 4-8) on systems with many cores.
+  # workerCount: 4
+
+  # NVIDIA GPU confidential computing configuration
+  gpu:
+    enabled: false
 
   # Intel TDX (Trust Domain Extensions) configuration
   tdx:
