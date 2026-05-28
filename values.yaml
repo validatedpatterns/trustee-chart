@@ -67,6 +67,16 @@ kbs:
     # For Azure: Use https://global.acccache.azure.net/sgx/certification/v4/
     # For bare metal/Intel: Use https://api.trustedservices.intel.com/sgx/certification/v4/
     collateralService: "https://api.trustedservices.intel.com/sgx/certification/v4/"
+
+  # Bare metal attestation configuration
+  # Enables firmware reference value collection and enforcement
+  baremetal:
+    # Enable bare metal firmware reference values (Intel TDX / AMD SEV-SNP)
+    # When enabled, creates ExternalSecret to pull firmware measurements from Vault
+    # Requires firmware values pushed to secret/data/hub/firmwareReferenceValues
+    # See docs/firmware-reference-values.md in coco-pattern for collection workflow
+    enabled: false
+
 # Attestation token certificate configuration
 # Used when secretStore.backend is "none" (cert-manager generates certs)
 attestation:

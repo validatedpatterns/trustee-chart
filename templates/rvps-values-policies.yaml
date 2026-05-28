@@ -44,6 +44,30 @@ spec:
           {{`{{- $referenceValues = append $referenceValues (dict "name" "snp_pcr12" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr12)) -}}`}}
           {{`{{- $referenceValues = append $referenceValues (dict "name" "tdx_pcr12" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr12)) -}}`}}
           {{`{{- end -}}`}}
+          {{`{{- $firmwareStash := (lookup "v1" "Secret" "trustee-operator-system" "firmware-reference-values") -}}`}}
+          {{`{{- if $firmwareStash -}}`}}
+          {{`{{- $firmwareData := $firmwareStash.data -}}`}}
+          {{`{{- if $firmwareData.mr_td -}}`}}
+          {{`{{- $mrTdValues := ($firmwareData.mr_td | base64dec | fromJson) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "mr_td" "expiration" "2027-12-12T00:00:00Z" "value" $mrTdValues) -}}`}}
+          {{`{{- end -}}`}}
+          {{`{{- if $firmwareData.rtmr_1 -}}`}}
+          {{`{{- $rtmr1Values := ($firmwareData.rtmr_1 | base64dec | fromJson) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "rtmr_1" "expiration" "2027-12-12T00:00:00Z" "value" $rtmr1Values) -}}`}}
+          {{`{{- end -}}`}}
+          {{`{{- if $firmwareData.rtmr_2 -}}`}}
+          {{`{{- $rtmr2Values := ($firmwareData.rtmr_2 | base64dec | fromJson) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "rtmr_2" "expiration" "2027-12-12T00:00:00Z" "value" $rtmr2Values) -}}`}}
+          {{`{{- end -}}`}}
+          {{`{{- if $firmwareData.snp_launch_measurement -}}`}}
+          {{`{{- $snpLaunchValues := ($firmwareData.snp_launch_measurement | base64dec | fromJson) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "snp_launch_measurement" "expiration" "2027-12-12T00:00:00Z" "value" $snpLaunchValues) -}}`}}
+          {{`{{- end -}}`}}
+          {{`{{- if $firmwareData.xfam -}}`}}
+          {{`{{- $xfamValues := ($firmwareData.xfam | base64dec | fromJson) -}}`}}
+          {{`{{- $referenceValues = append $referenceValues (dict "name" "xfam" "expiration" "2027-12-12T00:00:00Z" "value" $xfamValues) -}}`}}
+          {{`{{- end -}}`}}
+          {{`{{- end -}}`}}
           - complianceType: mustonlyhave
             objectDefinition:
               apiVersion: v1
