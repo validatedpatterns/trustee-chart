@@ -14,8 +14,17 @@ spec:
     {{- range .Values.kbs.secretResources }}
     - "{{ .name }}"
     {{- end }}
+    {{- /* extraSecrets are pre-existing secrets created outside the Vault/ESO
+           flow (see values.yaml). On Azure peer-pods, CDH does not fetch
+           registry credentials from KBS, so pull-secret-credential-policy.yaml
+           never creates the "credential" secret there -- keep this condition
+           in sync with that template so KbsConfig never lists a secret that
+           won't exist, which otherwise fails KBS deployment with
+           'Secret "credential" not found'. */}}
+    {{- if and (eq .Values.global.coco.secured true) (ne .Values.global.clusterPlatform "Azure") }}
     {{- range .Values.kbs.extraSecrets }}
     - "{{ . }}"
+    {{- end }}
     {{- end }}
     {{- if eq .Values.global.coco.securityPolicyFlavour "signed" }}
     - "cosign-keys"
