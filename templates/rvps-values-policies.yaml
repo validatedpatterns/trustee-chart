@@ -28,33 +28,45 @@ spec:
           {{`{{- $referenceValues := dict -}}`}}
           {{`{{- $entry := dict "version" "0.1.0" "name" "init_data" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr8Hash $debugPcr8Hash $rawHash $debugRawHash $rawHashPadded $debugRawHashPadded) -}}`}}
           {{`{{- $referenceValues = set $referenceValues "init_data" (toJson $entry | base64enc | replace "+" "-" | replace "/" "_") -}}`}}
-          {{`{{- $pcrStash := (lookup "v1" "Secret" "trustee-operator-system" "pcr-stash") -}}`}}
-          {{`{{- if $pcrStash -}}`}}
-          {{`{{- $secretData := $pcrStash.data.json | base64dec | fromJson -}}`}}
-          {{`{{- $pcr03 := $secretData.measurements.sha256.pcr03 -}}`}}
-          {{`{{- $pcr09 := $secretData.measurements.sha256.pcr09 -}}`}}
-          {{`{{- $pcr11 := $secretData.measurements.sha256.pcr11 -}}`}}
-          {{`{{- $pcr12 := $secretData.measurements.sha256.pcr12 -}}`}}
-          {{`{{- $e := dict "version" "0.1.0" "name" "snp_pcr03" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr03) -}}`}}
-          {{`{{- $referenceValues = set $referenceValues "snp_pcr03" (toJson $e | base64enc | replace "+" "-" | replace "/" "_") -}}`}}
-          {{`{{- $e = dict "version" "0.1.0" "name" "tdx_pcr03" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr03) -}}`}}
-          {{`{{- $referenceValues = set $referenceValues "tdx_pcr03" (toJson $e | base64enc | replace "+" "-" | replace "/" "_") -}}`}}
-          {{`{{- $e = dict "version" "0.1.0" "name" "snp_pcr08" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr8Hash $debugPcr8Hash) -}}`}}
+          {{`{{- $e := dict "version" "0.1.0" "name" "snp_pcr08" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr8Hash $debugPcr8Hash) -}}`}}
           {{`{{- $referenceValues = set $referenceValues "snp_pcr08" (toJson $e | base64enc | replace "+" "-" | replace "/" "_") -}}`}}
           {{`{{- $e = dict "version" "0.1.0" "name" "tdx_pcr08" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr8Hash $debugPcr8Hash) -}}`}}
           {{`{{- $referenceValues = set $referenceValues "tdx_pcr08" (toJson $e | base64enc | replace "+" "-" | replace "/" "_") -}}`}}
-          {{`{{- $e = dict "version" "0.1.0" "name" "snp_pcr09" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr09) -}}`}}
+          {{`{{- $pcrStash := (lookup "v1" "Secret" "trustee-operator-system" "pcr-stash") -}}`}}
+          {{`{{- if $pcrStash -}}`}}
+          {{`{{- $secretData := $pcrStash.data.json | base64dec | fromJson -}}`}}
+          {{`{{- if $secretData.snp_pcr03 -}}`}}
+          {{`{{- $e := dict "version" "0.1.0" "name" "snp_pcr03" "expiration" "2027-12-12T00:00:00Z" "value" $secretData.snp_pcr03 -}}`}}
+          {{`{{- $referenceValues = set $referenceValues "snp_pcr03" (toJson $e | base64enc | replace "+" "-" | replace "/" "_") -}}`}}
+          {{`{{- end -}}`}}
+          {{`{{- if $secretData.tdx_pcr03 -}}`}}
+          {{`{{- $e := dict "version" "0.1.0" "name" "tdx_pcr03" "expiration" "2027-12-12T00:00:00Z" "value" $secretData.tdx_pcr03 -}}`}}
+          {{`{{- $referenceValues = set $referenceValues "tdx_pcr03" (toJson $e | base64enc | replace "+" "-" | replace "/" "_") -}}`}}
+          {{`{{- end -}}`}}
+          {{`{{- if $secretData.snp_pcr09 -}}`}}
+          {{`{{- $e := dict "version" "0.1.0" "name" "snp_pcr09" "expiration" "2027-12-12T00:00:00Z" "value" $secretData.snp_pcr09 -}}`}}
           {{`{{- $referenceValues = set $referenceValues "snp_pcr09" (toJson $e | base64enc | replace "+" "-" | replace "/" "_") -}}`}}
-          {{`{{- $e = dict "version" "0.1.0" "name" "tdx_pcr09" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr09) -}}`}}
+          {{`{{- end -}}`}}
+          {{`{{- if $secretData.tdx_pcr09 -}}`}}
+          {{`{{- $e := dict "version" "0.1.0" "name" "tdx_pcr09" "expiration" "2027-12-12T00:00:00Z" "value" $secretData.tdx_pcr09 -}}`}}
           {{`{{- $referenceValues = set $referenceValues "tdx_pcr09" (toJson $e | base64enc | replace "+" "-" | replace "/" "_") -}}`}}
-          {{`{{- $e = dict "version" "0.1.0" "name" "snp_pcr11" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr11) -}}`}}
+          {{`{{- end -}}`}}
+          {{`{{- if $secretData.snp_pcr11 -}}`}}
+          {{`{{- $e := dict "version" "0.1.0" "name" "snp_pcr11" "expiration" "2027-12-12T00:00:00Z" "value" $secretData.snp_pcr11 -}}`}}
           {{`{{- $referenceValues = set $referenceValues "snp_pcr11" (toJson $e | base64enc | replace "+" "-" | replace "/" "_") -}}`}}
-          {{`{{- $e = dict "version" "0.1.0" "name" "tdx_pcr11" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr11) -}}`}}
+          {{`{{- end -}}`}}
+          {{`{{- if $secretData.tdx_pcr11 -}}`}}
+          {{`{{- $e := dict "version" "0.1.0" "name" "tdx_pcr11" "expiration" "2027-12-12T00:00:00Z" "value" $secretData.tdx_pcr11 -}}`}}
           {{`{{- $referenceValues = set $referenceValues "tdx_pcr11" (toJson $e | base64enc | replace "+" "-" | replace "/" "_") -}}`}}
-          {{`{{- $e = dict "version" "0.1.0" "name" "snp_pcr12" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr12) -}}`}}
+          {{`{{- end -}}`}}
+          {{`{{- if $secretData.snp_pcr12 -}}`}}
+          {{`{{- $e := dict "version" "0.1.0" "name" "snp_pcr12" "expiration" "2027-12-12T00:00:00Z" "value" $secretData.snp_pcr12 -}}`}}
           {{`{{- $referenceValues = set $referenceValues "snp_pcr12" (toJson $e | base64enc | replace "+" "-" | replace "/" "_") -}}`}}
-          {{`{{- $e = dict "version" "0.1.0" "name" "tdx_pcr12" "expiration" "2027-12-12T00:00:00Z" "value" (list $pcr12) -}}`}}
+          {{`{{- end -}}`}}
+          {{`{{- if $secretData.tdx_pcr12 -}}`}}
+          {{`{{- $e := dict "version" "0.1.0" "name" "tdx_pcr12" "expiration" "2027-12-12T00:00:00Z" "value" $secretData.tdx_pcr12 -}}`}}
           {{`{{- $referenceValues = set $referenceValues "tdx_pcr12" (toJson $e | base64enc | replace "+" "-" | replace "/" "_") -}}`}}
+          {{`{{- end -}}`}}
           {{`{{- end -}}`}}
           {{`{{- $firmwareStash := (lookup "v1" "Secret" "trustee-operator-system" "firmware-reference-values") -}}`}}
           {{`{{- if $firmwareStash -}}`}}
