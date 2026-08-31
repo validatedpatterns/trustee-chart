@@ -50,6 +50,12 @@ data:
 
     [attestation_service.verifier_config.dcap_verifier]
     collateral_service = "{{ .Values.kbs.tdx.collateralService }}"
+    tcb_update_type = "early"
+    {{- end }}
+    {{- if .Values.kbs.snp.enabled }}
+
+    [attestation_service.verifier_config.snp_verifier]
+    vcek_sources = [{ type = "OfflineStore" }]
     {{- end }}
 
     [[plugins]]

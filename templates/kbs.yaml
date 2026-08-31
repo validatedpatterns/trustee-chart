@@ -45,3 +45,17 @@ spec:
 
   # service type (optional, it defaults to ClusterIP)
   kbsServiceType: ClusterIP
+
+  # Local certificate cache for offline attestation verifiers
+  {{- if or .Values.kbs.tdx.enabled (and .Values.kbs.snp.enabled .Values.kbs.snp.vcekSecrets) }}
+  kbsLocalCertCacheSpec:
+    secrets:
+    {{- if .Values.kbs.tdx.enabled }}
+    - secretName: tdx-collateral
+      mountPath: "{{ .Values.kbs.tdx.collateralMountPath }}"
+    {{- end }}
+    {{- range .Values.kbs.snp.vcekSecrets }}
+    - secretName: "{{ .secretName }}"
+      mountPath: "/opt/confidential-containers/attestation-service/kds-store/vcek/{{ .hwid }}"
+    {{- end }}
+  {{- end }}
