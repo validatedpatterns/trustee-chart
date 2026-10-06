@@ -55,7 +55,17 @@ data:
     {{- if .Values.kbs.snp.enabled }}
 
     [attestation_service.verifier_config.snp_verifier]
-    vcek_sources = [{ type = "OfflineStore" }]
+    {{- $vcekSources := list }}
+    {{- if .Values.kbs.snp.vcekSecrets }}
+    {{- $vcekSources = append $vcekSources "{ type = \"OfflineStore\" }" }}
+    {{- end }}
+    {{- if .Values.kbs.snp.vcekKdsUrl }}
+    {{- $vcekSources = append $vcekSources (printf "{ type = \"KDS\", base_url = \"%s\" }" .Values.kbs.snp.vcekKdsUrl) }}
+    {{- end }}
+    {{- if not $vcekSources }}
+    {{- $vcekSources = list "{ type = \"OfflineStore\" }" }}
+    {{- end }}
+    vcek_sources = [{{ join ", " $vcekSources }}]
     {{- end }}
 
     [[plugins]]
