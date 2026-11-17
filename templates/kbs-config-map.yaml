@@ -70,3 +70,10 @@ data:
 
     [storage_backend.backends.local_json]
     dir_path = "/opt/confidential-containers/storage/local_json"
+
+    {{- if .Values.kbs.spire.enabled }}
+
+    [[plugins]]
+    name = "spire"
+    admin_socket_path = "{{ .Values.kbs.spire.adminSocketPath }}"
+    {{- end }}

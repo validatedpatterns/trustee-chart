@@ -59,3 +59,16 @@ spec:
       mountPath: "/opt/confidential-containers/attestation-service/kds-store/vcek/{{ .hwid }}"
     {{- end }}
   {{- end }}
+
+  # SPIRE Delegated Identity plugin: mount the agent admin socket
+  {{- if .Values.kbs.spire.enabled }}
+  extraVolumes:
+    - name: spire-admin-socket
+      hostPath:
+        path: {{ .Values.kbs.spire.socketHostPath }}
+        type: Socket
+  extraVolumeMounts:
+    - name: spire-admin-socket
+      mountPath: {{ dir .Values.kbs.spire.adminSocketPath }}
+      readOnly: true
+  {{- end }}

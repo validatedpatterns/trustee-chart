@@ -50,6 +50,9 @@ In order to use this chart, you will need to:
 | kbs.secretResources[1].name | string | `"passphrase"` |  |
 | kbs.snp.enabled | bool | `false` |  |
 | kbs.snp.vcekSecrets | list | `[]` |  |
+| kbs.spire.enabled | bool | `false` |  |
+| kbs.spire.adminSocketPath | string | `"/run/spire/sockets/admin.sock"` |  |
+| kbs.spire.socketHostPath | string | `"/run/spire/admin/admin.sock"` |  |
 | kbs.tdx.collateralFileName | string | `"platform_collaterals.json"` |  |
 | kbs.tdx.collateralMountPath | string | `"/opt/confidential-containers/attestation-service/tdx"` |  |
 | kbs.tdx.collateralService | string | `"file:///opt/confidential-containers/attestation-service/tdx/platform_collaterals.json"` |  |

@@ -86,6 +86,19 @@ kbs:
     # - hwid: "abc123def456..."
     #   secretName: "snp-vcek-abc123def456"
 
+  # SPIRE Delegated Identity plugin configuration
+  # Requires a KBS image built with the spire-plugin cargo feature
+  # (upstream trustee v0.23.0+, or a custom build via custom catalog source).
+  # When enabled, serves kbs+spire:// resource URIs (X.509 SVIDs fetched
+  # from the cluster's SPIRE agent) and mounts the agent's admin socket
+  # into the KBS pod.
+  spire:
+    enabled: false
+    # Path of the SPIRE agent admin socket as seen inside the KBS pod
+    adminSocketPath: "/run/spire/sockets/admin.sock"
+    # hostPath on the node where the SPIRE agent exposes its admin socket
+    socketHostPath: "/run/spire/admin/admin.sock"
+
   # Private registry CA certificate injection
   # Enable to inject private registry CA cert into imperative namespace for
   # initdata generation. Requires registryCaCert in Vault.
